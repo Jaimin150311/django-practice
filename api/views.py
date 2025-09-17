@@ -258,15 +258,23 @@ def studentDetailView(request, pk):
 # (ii) - using viewsets.ModelViewSet
 
 from .serializers import EmployeeSerializer
-from employees.models import Employee
+from employees.models import Employee 
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .paginations import CustomPagination
+# from .paginations import CustomPagination
 
 class EmployeeViewSet(viewsets.ModelViewSet): 
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer 
-    pagination_class = CustomPagination
+
+    # pagination 
+    # pagination_class = CustomPagination
+
+    # filtering 
+    # filterset_fields = ['designation']
+
+    # custom filter
+    # filterset_class = EmployeeFilter
 
 
 
@@ -277,10 +285,23 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 from rest_framework import generics
 from blogs.models import Blog, Comment
 from blogs.serializers import BlogSerializer, CommentSerializer
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 class BlogsView(generics.ListCreateAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
+
+    # for search filter
+    # filter_backends = [SearchFilter]
+
+    search_fields = ['blog_title', 'blog_body']
+
+    # search the blog by title but blog must be start with searched title
+    # search_fields = ['^blog_title']
+
+    # Ordering Filter
+    filter_backends = [OrderingFilter]
+    ordering_fields = ['id', 'blog_title'] 
 
 
 class CommentsView(generics.ListCreateAPIView):

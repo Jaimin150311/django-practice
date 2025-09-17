@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'api',
     'employees',
     'blogs',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -129,12 +130,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Global Pagination :-
 
-# REST_FRAMEWORK = {
-#     # ---- PageNumberPagination -----
-#     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-#     # 'PAGE_SIZE': 2,
+REST_FRAMEWORK = {
+    # ---- PageNumberPagination -----
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 2,
 
-#     # ---- LimitOffsetPagination -----
-#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-#     'PAGE_SIZE': 2,
-# }
+    # ---- LimitOffsetPagination -----
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 2,
+
+    # Filtering 
+    # support filtering for all things in view
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+
+    # replace search in URL to q
+    'SEARCH_PARAM': 'q',
+
+    # replace ordering in URL to order-by
+    'ORDERING_PARAM': 'order-by'
+}
